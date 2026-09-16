@@ -14,7 +14,168 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      attendance_events: {
+        Row: {
+          created_at: string
+          employee_id: string
+          event_type: string
+          id: string
+          method: string
+          occurred_at: string
+        }
+        Insert: {
+          created_at?: string
+          employee_id: string
+          event_type: string
+          id?: string
+          method?: string
+          occurred_at?: string
+        }
+        Update: {
+          created_at?: string
+          employee_id?: string
+          event_type?: string
+          id?: string
+          method?: string
+          occurred_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "attendance_events_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      auth_challenges: {
+        Row: {
+          challenge: string
+          created_at: string
+          employee_id: string | null
+          expires_at: string
+          id: string
+          purpose: string
+        }
+        Insert: {
+          challenge: string
+          created_at?: string
+          employee_id?: string | null
+          expires_at?: string
+          id?: string
+          purpose: string
+        }
+        Update: {
+          challenge?: string
+          created_at?: string
+          employee_id?: string | null
+          expires_at?: string
+          id?: string
+          purpose?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "auth_challenges_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      employees: {
+        Row: {
+          address: string | null
+          created_at: string
+          date_of_birth: string | null
+          department: string | null
+          email: string | null
+          employee_code: string
+          full_name: string
+          id: string
+          is_active: boolean
+          job_title: string | null
+          phone: string | null
+          photo_path: string | null
+          updated_at: string
+        }
+        Insert: {
+          address?: string | null
+          created_at?: string
+          date_of_birth?: string | null
+          department?: string | null
+          email?: string | null
+          employee_code: string
+          full_name: string
+          id?: string
+          is_active?: boolean
+          job_title?: string | null
+          phone?: string | null
+          photo_path?: string | null
+          updated_at?: string
+        }
+        Update: {
+          address?: string | null
+          created_at?: string
+          date_of_birth?: string | null
+          department?: string | null
+          email?: string | null
+          employee_code?: string
+          full_name?: string
+          id?: string
+          is_active?: boolean
+          job_title?: string | null
+          phone?: string | null
+          photo_path?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      fingerprints: {
+        Row: {
+          counter: number
+          created_at: string
+          credential_id: string
+          device_label: string | null
+          employee_id: string
+          id: string
+          last_used_at: string | null
+          public_key: string
+          transports: string[] | null
+        }
+        Insert: {
+          counter?: number
+          created_at?: string
+          credential_id: string
+          device_label?: string | null
+          employee_id: string
+          id?: string
+          last_used_at?: string | null
+          public_key: string
+          transports?: string[] | null
+        }
+        Update: {
+          counter?: number
+          created_at?: string
+          credential_id?: string
+          device_label?: string | null
+          employee_id?: string
+          id?: string
+          last_used_at?: string | null
+          public_key?: string
+          transports?: string[] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fingerprints_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
