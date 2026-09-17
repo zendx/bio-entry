@@ -86,8 +86,8 @@ function Employees() {
   const enroll = useMutation({
     mutationFn: async (employeeId: string) => {
       const origin = window.location.origin;
-      const options = await beginEnroll({ data: { employee_id: employeeId, origin } });
-      const response = await startRegistration({ optionsJSON: options as never });
+      const options = JSON.parse(await beginEnroll({ data: { employee_id: employeeId, origin } }));
+      const response = await startRegistration({ optionsJSON: options });
       return completeEnroll({
         data: {
           employee_id: employeeId,
