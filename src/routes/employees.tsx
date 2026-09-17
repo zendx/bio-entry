@@ -35,7 +35,7 @@ export const Route = createFileRoute("/employees")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: Employees;
+  component: Employees,
 });
 
 const emptyForm = {
