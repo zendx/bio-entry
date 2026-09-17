@@ -15,6 +15,7 @@ import {
   removeFingerprints,
   setEmployeeActive,
   startEnrollment,
+  type EmployeeRecord,
 } from "@/lib/clocking.functions";
 
 export const Route = createFileRoute("/employees")({
@@ -270,7 +271,7 @@ function Employees() {
           </header>
 
           <ul className="divide-y divide-border/60">
-            {(employees.data ?? []).map((emp) => (
+            {((employees.data ?? []) as EmployeeRecord[]).map((emp) => (
               <li key={emp.id} className="flex flex-wrap items-center gap-4 px-6 py-4">
                 {emp.photo_url ? (
                   <img src={emp.photo_url} alt={emp.full_name} className="size-12 rounded-lg object-cover" />

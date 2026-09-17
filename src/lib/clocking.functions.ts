@@ -39,7 +39,7 @@ export const listEmployees = createServerFn({ method: "GET" }).handler(async () 
     .order("created_at", { ascending: false });
   if (error) throw new Error(error.message);
 
-  const ids = (employees ?? []).map((e: any) => e.id);
+  
   const [{ data: prints }, { data: events }] = await Promise.all([
     db.from("fingerprints").select("employee_id"),
     db
