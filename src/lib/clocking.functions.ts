@@ -163,7 +163,7 @@ export const startEnrollment = createServerFn({ method: "POST" })
     });
 
     await storeChallenge(options.challenge, "enroll", emp.id);
-    return JSON.parse(JSON.stringify(options)) as Record<string, unknown>;
+    return JSON.stringify(options);
   });
 
 export const finishEnrollment = createServerFn({ method: "POST" })
@@ -233,7 +233,7 @@ export const startScan = createServerFn({ method: "POST" })
       userVerification: "required",
     });
     await storeChallenge(options.challenge, "scan", null);
-    return JSON.parse(JSON.stringify(options)) as Record<string, unknown>;
+    return JSON.stringify(options);
   });
 
 export type ClockResult = {
