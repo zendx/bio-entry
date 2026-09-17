@@ -55,8 +55,8 @@ function ClockStation() {
   const scan = useMutation({
     mutationFn: async () => {
       const origin = window.location.origin;
-      const options = await begin({ data: { origin } });
-      const response = await startAuthentication({ optionsJSON: options as never });
+      const options = JSON.parse(await begin({ data: { origin } }));
+      const response = await startAuthentication({ optionsJSON: options });
       return complete({ data: { origin, response } });
     },
     onMutate: () => {

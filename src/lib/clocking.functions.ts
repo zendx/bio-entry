@@ -39,7 +39,7 @@ export const listEmployees = createServerFn({ method: "GET" }).handler(async () 
     .order("created_at", { ascending: false });
   if (error) throw new Error(error.message);
 
-  const ids = (employees ?? []).map((e: any) => e.id);
+  
   const [{ data: prints }, { data: events }] = await Promise.all([
     db.from("fingerprints").select("employee_id"),
     db
@@ -73,7 +73,7 @@ export const listEmployees = createServerFn({ method: "GET" }).handler(async () 
     photo_url: e.photo_path ? (photoMap.get(e.photo_path) ?? null) : null,
     fingerprint_count: printCount.get(e.id) ?? 0,
     last_event: lastEvent.get(e.id) ?? null,
-  })).filter(() => ids.length >= 0);
+  }));
 });
 
 export const createEmployee = createServerFn({ method: "POST" })
@@ -163,7 +163,7 @@ export const startEnrollment = createServerFn({ method: "POST" })
     });
 
     await storeChallenge(options.challenge, "enroll", emp.id);
-    return options;
+    return JSON.stringify(options);
   });
 
 export const finishEnrollment = createServerFn({ method: "POST" })
@@ -233,7 +233,7 @@ export const startScan = createServerFn({ method: "POST" })
       userVerification: "required",
     });
     await storeChallenge(options.challenge, "scan", null);
-    return options;
+    return JSON.stringify(options);
   });
 
 export type ClockResult = {
@@ -387,7 +387,7 @@ export const getDashboard = createServerFn({ method: "GET" }).handler(
     ]);
 
     const empList = employees ?? [];
-    const byId = new Map(empList.map((e: any) => [e.id, e]));
+    const byId = new Map<string, any>(empList.map((e: any) => [e.id, e]));
     const photoMap = await signPhotos(empList.map((e: any) => e.photo_path));
 
     const todayEvents = (weekEvents ?? []).filter(
@@ -494,7 +494,7 @@ export const getDashboard = createServerFn({ method: "GET" }).handler(
         active_employees: empList.filter((e: any) => e.is_active).length,
         enrolled_fingerprints: (prints ?? []).length,
         present_now: presentNow,
-        clocked_in_today: today.filter((t) => t.first_in).length,
+        clocked_in_today: today.filter((t: { first_in: string | null }) => t.first_in).length,
         late_today: lateToday,
         avg_arrival:
           avg === null
